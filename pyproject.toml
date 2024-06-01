@@ -9,6 +9,10 @@ readme = "README.md"
 python = ">=3.9,<3.13"
 langchain-community = "^0.2.1"
 python-dotenv = "^1.0.1"
+gitpython = "^3.1.43"
+langchain-chroma = "^0.1.1"
+langchain-openai = "^0.1.8"
+sentence-transformers = "^3.0.0"
 
 
 [build-system]

@@ -1,17 +1,18 @@
 from dotenv import load_dotenv
+from pprint import pprint
+from langchain_community.document_loaders import GitHubIssuesLoader
 import os
 
 load_dotenv()
-
-from langchain_community.document_loaders import GitHubIssuesLoader
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 loader = GitHubIssuesLoader(
-    repo="langchain-ai/langchain",
-    access_token=os.getenv("ACCESS_TOKEN"),  # delete/comment out this argument if you've set the access token as an env var.
+    repo="expressjs/express",
+    labels=["good first contribution"], # TODO this label doesn't work...
+    access_token=ACCESS_TOKEN,
 )
 
 docs = loader.load()
 
-print(docs[0].page_content)
-print(docs[0].metadata)
+pprint(docs)
 
