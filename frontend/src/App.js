@@ -1,43 +1,54 @@
 import React, { useState } from 'react';
 import './App.css';
 import Logo from './logo';
+import ReactMarkdown from 'react-markdown'; // Import react-markdown
 
 function App() {
-  const [repoUrl, setRepoUrl] = useState('');
-  const [generatedContent, setGeneratedContent] = useState('');
+    const [repoUrl, setRepoUrl] = useState('');
+    const [generatedContent, setGeneratedContent] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Use fetch or another method to send repoUrl to backend for processing
-    const response = await fetch('http://localhost:5000/api/generate-tutorials', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ repoUrl }),
-    });
-    const data = await response.json();
-    setGeneratedContent(data.generatedContent);
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log('Sending request to backend...');
+            const response = await fetch('http://localhost:5001/api/test-endpoint', { // Updated port to 5001
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ repoUrl }),
+            });
+            console.log('Received response from backend');
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            const data = await response.json();
+            setGeneratedContent(data.message);
+        } catch (error) {
+            console.error('Error during fetch:', error);
+            setGeneratedContent('Failed to fetch');
+        }
+    };
 
-  return (
-    <div className="container">
-      <Logo />
-      <p>Generate onboarding tutorials for Github repositories</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={repoUrl}
-          onChange={(e) => setRepoUrl(e.target.value)}
-          placeholder="Enter GitHub repo URL"
-        />
-        <button type="submit">Go</button>
-      </form>
-      <div id="generatedContent">
-        {generatedContent}
-      </div>
-    </div>
-  );
+    return (
+        <div className="container">
+            <Logo />
+            <p>Generate onboarding tutorials for Github Repositories</p>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={repoUrl}
+                    onChange={(e) => setRepoUrl(e.target.value)}
+                    placeholder="Enter GitHub repo URL"
+                />
+                <button type="submit">Go</button>
+            </form>
+            <div id="generatedContent">
+                {/* {generatedContent} */}
+                <ReactMarkdown>{generatedContent}</ReactMarkdown>
+            </div>
+        </div>
+    );
 }
 
 export default App;

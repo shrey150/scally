@@ -45,7 +45,7 @@ input[type="text"]::placeholder {
 
 button {
   padding: 10px 20px;
-  background-color: #ff7f00;
+  background-color: #F6CD45;
   color: #000000;
   border: none;
   margin-top: 10px;
@@ -64,4 +64,33 @@ button:hover {
   background-color: #222222;
   padding: 20px;
   border-radius: 5px;
+}
+
+.markdown-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-content {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.markdown-content h1 {
+  font-size: 24px;
+}
+
+.markdown-content h2 {
+  font-size: 20px;
+}
+
+.markdown-content h3 {
+  font-size: 18px;
+}
+
+.markdown-content p {
+  margin: 10px 0;
 }

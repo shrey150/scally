@@ -11,7 +11,7 @@
   }
   
   .logo-highlight {
-    background: linear-gradient(90deg, #F6CD45, #ff7f00);
+    background: linear-gradient(90deg, #ff7f00, #F6CD45);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
