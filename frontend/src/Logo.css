@@ -1,0 +1,25 @@
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-size: 2.5em;
+  }
+  
+  .logo-text {
+    color: #ffffff;
+  }
+  
+  .logo-highlight {
+    background: linear-gradient(90deg, #F6CD45, #ff7f00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  
+  .logo-image {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+  }
+  
+  
