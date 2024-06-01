@@ -69,7 +69,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "Answer the user's questions based on the below context:\n\n{context}",
+            "You are a world-class engineer who has full knowledge of the given codebase. Use the below context in the user's task:\n\n{context}",
         ),
         ("placeholder", "{chat_history}"),
         ("user", "{input}"),
@@ -79,6 +79,13 @@ document_chain = create_stuff_documents_chain(llm, prompt)
 
 qa = create_retrieval_chain(retriever_chain, document_chain)
 
-question = "How are relevant plot summaries found?"
+
+
+# question = (
+#     "Generate an onboarding guide in Markdown composed of the core principles shown through this pull request." +
+#     "Focus on the steps the developer took in the context of the entire codebase and explain in enough detail," +
+#     "such that another engineer could read this onboarding guide, implement the patch, and solve the issue.\n\n" +
+#     f"Here are the patch notes: {}"
+# )
 result = qa.invoke({"input": question})
 print(result["answer"])
