@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import Logo from './logo';
 import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
     const [repoUrl, setRepoUrl] = useState('');
@@ -23,7 +25,8 @@ function App() {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
             const data = await response.json();
-            setGeneratedContent(data.message);
+            console.log(data);
+            setGeneratedContent(data.text);
         } catch (error) {
             console.error('Error during fetch:', error);
             setGeneratedContent('Failed to fetch');
@@ -31,7 +34,7 @@ function App() {
     };
 
     return (
-        <div className="container">
+        <div className="container-fluid ">
             <Logo />
             <p>Generate onboarding tutorials for Pull Requests</p>
             <form onSubmit={handleSubmit}>
@@ -44,7 +47,30 @@ function App() {
                 <button type="submit">Go</button>
             </form>
             <div id="generatedContent">
-                <ReactMarkdown>{generatedContent}</ReactMarkdown>
+                {
+                    generatedContent === '' ? "Loading..." : (
+                        <ReactMarkdown
+                        children={generatedContent}
+                        components={{
+                            code({ node, inline, className, children, ...props }) {
+                                const match = /language-(\w+)/.exec(className || '')
+                                return !inline && match ? (
+                                    <SyntaxHighlighter
+                                        children={String(children).replace(/\n$/, '')}
+                                        style={dark}
+                                        language={match[1]}
+                                        PreTag="div"
+                                        {...props}
+                                    />
+                                ) : (
+                                    <code className={className} {...props}>
+                                        {children}
+                                    </code>
+                                )
+                            }
+                        }}
+                    />)
+                }
             </div>
         </div>
     );
