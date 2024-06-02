@@ -39,7 +39,7 @@ def get_relevant_code(url: str) -> str:
     # Clone
     try:
         print('Cloning...')
-        repo_path = "repo"
+        repo_path = f"../data/{base_repo}"
         repo = Repo.clone_from(f"https://github.com/{base_repo}", to_path=repo_path)
     except GitCommandError as e:
         print(e)
@@ -49,9 +49,9 @@ def get_relevant_code(url: str) -> str:
 
     # Load
     loader = GenericLoader.from_filesystem(
-        path="repo",
+        path=repo_path,
         glob="**/*",
-        suffixes=[".py",".js",".c",".cpp",".rb",".rs",".go"],
+        suffixes=[".py",".js",".c",".cc",".cpp",".rb",".rs",".go",".ts",".tsx",".jsx",".java"],
         exclude=["**/non-utf8-encoding.py"],
         parser=LanguageParser(language=Language.PYTHON, parser_threshold=500),
     )

@@ -8,10 +8,12 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function App() {
     const [repoUrl, setRepoUrl] = useState('');
-    const [generatedContent, setGeneratedContent] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [generatedContent, setGeneratedContent] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             console.log('Sending request to backend...');
             const response = await fetch('http://localhost:8000/generate', { // Use port 8000
@@ -28,6 +30,7 @@ function App() {
             const data = await response.json();
             console.log(data);
             setGeneratedContent(data.text);
+            setLoading(false);
         } catch (error) {
             console.error('Error during fetch:', error);
             setGeneratedContent('Failed to fetch');
@@ -38,7 +41,8 @@ function App() {
         <div className="container">
             <div className="header">
                 <Logo />
-                <p>Generate onboarding tutorials for Pull Requests</p>
+                <p>Interactive onboarding for engineers.</p>
+                <i>Link your pull request, and we'll future-proof your codebase!</i>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -47,14 +51,17 @@ function App() {
                         placeholder="Enter Pull Request URL"
                     />
                     <button type="submit">Go</button>
+                    <CopyToClipboard text={generatedContent}>
+                        <button onClick={() => alert('Onboarding guide copied to clipboard!')}>💾</button>
+                    </CopyToClipboard>
                 </form>
             </div>
-            <CopyToClipboard text={generatedContent}>
-                <button>Copy to Clipboard</button>
-            </CopyToClipboard>
+            
             <div id="generatedContent">
                 {
-                    generatedContent === '' ? "Loading..." : (
+                    loading ? (
+                        'Loading...'
+                    ) : (
                         <ReactMarkdown
                             children={generatedContent}
                             components={{
