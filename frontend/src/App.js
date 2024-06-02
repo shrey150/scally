@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Logo from './logo';
-import ReactMarkdown from 'react-markdown'; // Import react-markdown
+import ReactMarkdown from 'react-markdown';
 
 function App() {
     const [repoUrl, setRepoUrl] = useState('');
@@ -11,12 +11,12 @@ function App() {
         e.preventDefault();
         try {
             console.log('Sending request to backend...');
-            const response = await fetch('http://localhost:5001/api/test-endpoint', { // Updated port to 5001
+            const response = await fetch('http://localhost:8000/generate', { // Use port 8000
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ repoUrl }),
+                body: JSON.stringify({ "url": repoUrl }),
             });
             console.log('Received response from backend');
             if (!response.ok) {
@@ -33,18 +33,17 @@ function App() {
     return (
         <div className="container">
             <Logo />
-            <p>Generate onboarding tutorials for Github Repositories</p>
+            <p>Generate onboarding tutorials for Pull Requests</p>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={repoUrl}
                     onChange={(e) => setRepoUrl(e.target.value)}
-                    placeholder="Enter GitHub repo URL"
+                    placeholder="Enter Pull Request URL"
                 />
                 <button type="submit">Go</button>
             </form>
             <div id="generatedContent">
-                {/* {generatedContent} */}
                 <ReactMarkdown>{generatedContent}</ReactMarkdown>
             </div>
         </div>
