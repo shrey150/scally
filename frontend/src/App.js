@@ -34,42 +34,45 @@ function App() {
     };
 
     return (
-        <div className="container-fluid ">
-            <Logo />
-            <p>Generate onboarding tutorials for Pull Requests</p>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={repoUrl}
-                    onChange={(e) => setRepoUrl(e.target.value)}
-                    placeholder="Enter Pull Request URL"
-                />
-                <button type="submit">Go</button>
-            </form>
+        <div className="container">
+            <div className="header">
+                <Logo />
+                <p>Generate onboarding tutorials for Pull Requests</p>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={repoUrl}
+                        onChange={(e) => setRepoUrl(e.target.value)}
+                        placeholder="Enter Pull Request URL"
+                    />
+                    <button type="submit">Go</button>
+                </form>
+            </div>
             <div id="generatedContent">
                 {
                     generatedContent === '' ? "Loading..." : (
                         <ReactMarkdown
-                        children={generatedContent}
-                        components={{
-                            code({ node, inline, className, children, ...props }) {
-                                const match = /language-(\w+)/.exec(className || '')
-                                return !inline && match ? (
-                                    <SyntaxHighlighter
-                                        children={String(children).replace(/\n$/, '')}
-                                        style={dark}
-                                        language={match[1]}
-                                        PreTag="div"
-                                        {...props}
-                                    />
-                                ) : (
-                                    <code className={className} {...props}>
-                                        {children}
-                                    </code>
-                                )
-                            }
-                        }}
-                    />)
+                            children={generatedContent}
+                            components={{
+                                code({ node, inline, className, children, ...props }) {
+                                    const match = /language-(\w+)/.exec(className || '')
+                                    return !inline && match ? (
+                                        <SyntaxHighlighter
+                                            children={String(children).replace(/\n$/, '')}
+                                            style={dark}
+                                            language={match[1]}
+                                            PreTag="div"
+                                            {...props}
+                                        />
+                                    ) : (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    )
+                                }
+                            }}
+                        />
+                    )
                 }
             </div>
         </div>
