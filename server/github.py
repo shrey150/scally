@@ -21,7 +21,6 @@ def fetch_changed_files(url: str) -> str:
 
     loader = GitHubPRLoader(
         repo=base_repo,
-        labels=["5.x"], # TODO this label doesn't work...
         access_token=ACCESS_TOKEN,
     )
 
@@ -52,7 +51,7 @@ def get_relevant_code(url: str) -> str:
     loader = GenericLoader.from_filesystem(
         path="repo",
         glob="**/*",
-        suffixes=[".py",".js",".c",".cpp",".rb"],
+        suffixes=[".py",".js",".c",".cpp",".rb",".rs",".go"],
         exclude=["**/non-utf8-encoding.py"],
         parser=LanguageParser(language=Language.PYTHON, parser_threshold=500),
     )

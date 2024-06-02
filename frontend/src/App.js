@@ -4,6 +4,7 @@ import Logo from './logo';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function App() {
     const [repoUrl, setRepoUrl] = useState('');
@@ -48,6 +49,9 @@ function App() {
                     <button type="submit">Go</button>
                 </form>
             </div>
+            <CopyToClipboard text={generatedContent}>
+                <button>Copy to Clipboard</button>
+            </CopyToClipboard>
             <div id="generatedContent">
                 {
                     generatedContent === '' ? "Loading..." : (
